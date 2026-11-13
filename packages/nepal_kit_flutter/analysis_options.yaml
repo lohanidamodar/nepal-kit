@@ -1,0 +1,11 @@
+analyzer:
+  exclude:
+    - build/**
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_final_locals
+    - directives_ordering
+    - public_member_api_docs

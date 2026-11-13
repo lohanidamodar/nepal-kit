@@ -1,0 +1,13 @@
+name: nepal_kit_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - packages/nepal_kit
+  - packages/nepal_kit_flutter
+  - example
+
+dev_dependencies:
+  lints: ^6.0.0

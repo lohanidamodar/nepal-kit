@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format
+        run: dart format --set-exit-if-changed -o none packages tool example/lib example/test
+      - name: nepal_kit
+        working-directory: packages/nepal_kit
+        run: |
+          dart analyze --fatal-infos
+          dart test
+      - name: nepal_kit_flutter
+        working-directory: packages/nepal_kit_flutter
+        run: |
+          flutter analyze
+          flutter test
+      - name: example
+        working-directory: example
+        run: |
+          flutter analyze
+          flutter test
+      - name: Publish dry run
+        run: |
+          (cd packages/nepal_kit && dart pub publish --dry-run)
+          (cd packages/nepal_kit_flutter && flutter pub publish --dry-run)
